@@ -8,6 +8,7 @@ import {
 } from "react-router";
 
 import type { Route } from "./+types/root";
+import { Loading } from "./components/loading";
 import "./app.css";
 
 export const links: Route.LinksFunction = () => [
@@ -34,9 +35,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="MD Viewer" />
-        <link rel="manifest" href="/manifest.json" />
-        <link rel="icon" type="image/svg+xml" href="/icon.svg" />
-        <link rel="apple-touch-icon" href="/icon.svg" />
+        <link rel="manifest" href="/view-markdown-files/manifest.json" />
+        <link rel="icon" type="image/svg+xml" href="/view-markdown-files/icon.svg" />
+        <link rel="apple-touch-icon" href="/view-markdown-files/icon.svg" />
         <Meta />
         <Links />
       </head>
@@ -51,6 +52,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   return <Outlet />;
+}
+
+export function HydrateFallback() {
+  return <Loading />;
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
