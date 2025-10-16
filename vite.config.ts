@@ -4,8 +4,8 @@ import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import { VitePWA } from "vite-plugin-pwa";
 
-export default defineConfig({
-  base: '/view-markdown-files/',
+export default defineConfig(({ command }) => ({
+  base: command === 'build' ? '/view-markdown-files/' : '/',
   plugins: [
     tailwindcss(),
     reactRouter(),
@@ -55,4 +55,4 @@ export default defineConfig({
       },
     }),
   ],
-});
+}));

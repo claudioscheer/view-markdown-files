@@ -5,7 +5,7 @@ import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Textarea } from "~/components/ui/textarea";
 import { ArrowLeft } from "lucide-react";
-import { markdownStorage } from "~/lib/markdown-storage";
+import { markdownDB } from "~/lib/db";
 
 export function meta({}: Route.MetaArgs) {
   return [{ title: "New File - Markdown Viewer" }];
@@ -15,11 +15,18 @@ export default function New() {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
 
-  const handleSave = () => {
-    if (title.trim() && content.trim()) {
-      markdownStorage.add(title, content);
-      navigate("/");
+  const handleSave = async () => {
+    if (title.trim() && content.trim() && !isSaving) {
+      setIsSaving(true);
+      try {
+        await markdownDB.add(title, content);
+        navigate("/");
+      } catch (error) {
+        console.error("Failed to save file:", error);
+        setIsSaving(false);
+      }
     }
   };
 
@@ -32,8 +39,8 @@ export default function New() {
               <ArrowLeft className="h-4 w-4 mr-2" />
               Cancel
             </Button>
-            <Button onClick={handleSave} size="sm">
-              Save
+            <Button onClick={handleSave} size="sm" disabled={isSaving}>
+              {isSaving ? "Saving..." : "Save"}
             </Button>
           </div>
         </div>

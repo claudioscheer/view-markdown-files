@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router";
 import type { Route } from "./+types/view";
 import { Button } from "~/components/ui/button";
 import { ArrowLeft } from "lucide-react";
-import { markdownStorage } from "~/lib/markdown-storage";
+import { markdownDB } from "~/lib/db";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -15,18 +15,29 @@ export default function View() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [content, setContent] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
-    if (id) {
-      const file = markdownStorage.getById(id);
-      if (file) {
-        setContent(file.content);
-      } else {
-        navigate("/");
+    async function loadFile() {
+      if (id) {
+        try {
+          const file = await markdownDB.getById(id);
+          if (file) {
+            setContent(file.content);
+          } else {
+            navigate("/");
+          }
+        } catch (error) {
+          console.error("Failed to load file:", error);
+          navigate("/");
+        } finally {
+          setIsLoading(false);
+        }
       }
     }
+    loadFile();
   }, [id, navigate]);
 
   useEffect(() => {
@@ -51,6 +62,17 @@ export default function View() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [lastScrollY]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">

@@ -5,7 +5,7 @@ import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Textarea } from "~/components/ui/textarea";
 import { ArrowLeft } from "lucide-react";
-import { markdownStorage } from "~/lib/markdown-storage";
+import { markdownDB } from "~/lib/db";
 
 export function meta({}: Route.MetaArgs) {
   return [{ title: "Edit File - Markdown Viewer" }];
@@ -16,25 +16,54 @@ export default function Edit() {
   const { id } = useParams();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
-    if (id) {
-      const file = markdownStorage.getById(id);
-      if (file) {
-        setTitle(file.title);
-        setContent(file.content);
-      } else {
-        navigate("/");
+    async function loadFile() {
+      if (id) {
+        try {
+          const file = await markdownDB.getById(id);
+          if (file) {
+            setTitle(file.title);
+            setContent(file.content);
+          } else {
+            navigate("/");
+          }
+        } catch (error) {
+          console.error("Failed to load file:", error);
+          navigate("/");
+        } finally {
+          setIsLoading(false);
+        }
       }
     }
+    loadFile();
   }, [id, navigate]);
 
-  const handleSave = () => {
-    if (id && title.trim() && content.trim()) {
-      markdownStorage.update(id, title, content);
-      navigate("/");
+  const handleSave = async () => {
+    if (id && title.trim() && content.trim() && !isSaving) {
+      setIsSaving(true);
+      try {
+        await markdownDB.update(id, title, content);
+        navigate("/");
+      } catch (error) {
+        console.error("Failed to save file:", error);
+        setIsSaving(false);
+      }
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -45,8 +74,8 @@ export default function Edit() {
               <ArrowLeft className="h-4 w-4 mr-2" />
               Cancel
             </Button>
-            <Button onClick={handleSave} size="sm">
-              Save
+            <Button onClick={handleSave} size="sm" disabled={isSaving}>
+              {isSaving ? "Saving..." : "Save"}
             </Button>
           </div>
         </div>
