@@ -25,7 +25,7 @@ export default defineConfig(({ mode }) => ({
         clientsClaim: true,
         skipWaiting: true,
         // Add version to cache name to force cache invalidation
-        cacheId: 'markdown-viewer-v' + __APP_VERSION__,
+        cacheId: `markdown-viewer-v${process.env.npm_package_version}`,
         // Force immediate update when new version is available
         runtimeCaching: [
           {
