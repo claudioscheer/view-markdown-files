@@ -36,9 +36,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="MD Viewer" />
-        <link rel="manifest" href={`${import.meta.env.BASE_URL}manifest.json`} />
-        <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}icon.svg`} />
-        <link rel="apple-touch-icon" href={`${import.meta.env.BASE_URL}icon.svg`} />
+        <link rel="manifest" href={`${import.meta.env.BASE_URL}/manifest.json`} />
+        <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}/icon.svg`} />
+        <link rel="apple-touch-icon" href={`${import.meta.env.BASE_URL}/icon.svg`} />
         <Meta />
         <Links />
       </head>
