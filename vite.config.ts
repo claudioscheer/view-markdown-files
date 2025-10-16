@@ -12,28 +12,13 @@ export default defineConfig(({ command }) => ({
     tsconfigPaths(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["icon.svg", "icon-192.png", "icon-512.png"],
+      includeAssets: ['**/*'], // Cache all static assets from public folder
       manifest: false, // We'll use the public/manifest.json instead
       workbox: {
-        globPatterns: ["**/*.{js,css,html,ico,png,svg,woff,woff2}"],
-        navigateFallback: 'index.html', // Serve index.html for all navigation requests (SPA routing)
-        navigateFallbackDenylist: [/^\/_/, /\/[^/?]+\.[^/]+$/], // Don't use fallback for API calls or files with extensions
-        runtimeCaching: [
-          {
-            urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
-            handler: "CacheFirst",
-            options: {
-              cacheName: "google-fonts-cache",
-              expiration: {
-                maxEntries: 10,
-                maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
-              },
-              cacheableResponse: {
-                statuses: [0, 200],
-              },
-            },
-          },
-        ],
+        globPatterns: ['**/*'], // Cache all files in the build output
+        cleanupOutdatedCaches: true,
+        clientsClaim: true,
+        skipWaiting: true,
       },
       devOptions: {
         enabled: true,
