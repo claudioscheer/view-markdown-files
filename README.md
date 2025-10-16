@@ -57,6 +57,8 @@ git push
 
 The GitHub Action will automatically build and deploy!
 
+> **Note**: Make sure to enable GitHub Pages in Settings → Pages → Source → GitHub Actions first!
+
 ## Usage
 
 1. **Create** a new markdown file by clicking "New File"
