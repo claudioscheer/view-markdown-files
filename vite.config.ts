@@ -5,6 +5,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig({
+  base: '/view-markdown-files/',
   plugins: [
     tailwindcss(),
     reactRouter(),
