@@ -2,6 +2,7 @@
   "name": "Markdown Viewer",
   "short_name": "MD Viewer",
   "description": "Simple markdown viewer and editor with local storage",
+  "version": "1.0.0",
   "start_url": "/view-markdown-files/",
   "scope": "/view-markdown-files/",
   "display": "standalone",

@@ -24,6 +24,25 @@ export default defineConfig(({ mode }) => ({
         cleanupOutdatedCaches: true,
         clientsClaim: true,
         skipWaiting: true,
+        // Add version to cache name to force cache invalidation
+        cacheId: 'markdown-viewer-v' + __APP_VERSION__,
+        // Force immediate update when new version is available
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/claudioscheer\.github\.io\/view-markdown-files\//,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'app-cache',
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 60 * 60 * 24 * 7, // 7 days
+              },
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+            },
+          },
+        ],
       },
       devOptions: {
         enabled: true,
