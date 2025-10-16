@@ -13,25 +13,7 @@ export default defineConfig(({ command }) => ({
     VitePWA({
       registerType: "autoUpdate",
       includeAssets: ["icon.svg", "icon-192.png", "icon-512.png"],
-      manifest: {
-        name: "Markdown Viewer",
-        short_name: "MD Viewer",
-        description: "Simple markdown viewer and editor with local storage",
-        start_url: ".",
-        scope: ".",
-        theme_color: "#171717",
-        background_color: "#ffffff",
-        display: "standalone",
-        orientation: "portrait-primary",
-        icons: [
-          {
-            src: "icon.svg",
-            sizes: "any",
-            type: "image/svg+xml",
-            purpose: "any maskable",
-          },
-        ],
-      },
+      manifest: false, // We'll use the public/manifest.json instead
       workbox: {
         globPatterns: ["**/*.{js,css,html,ico,png,svg,woff,woff2}"],
         runtimeCaching: [
