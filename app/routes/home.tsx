@@ -39,7 +39,7 @@ export default function Home() {
   return (
     <div className="min-h-screen pb-20">
       <div className="sticky top-0 bg-background/95 backdrop-blur-sm border-b z-10 safe-top">
-        <div className="container mx-auto px-4 py-4 max-w-4xl">
+        <div className="container mx-auto px-4 py-3 sm:py-4 max-w-4xl">
           <div className="flex justify-between items-center">
             <h1 className="text-2xl sm:text-3xl font-bold">Markdown Files</h1>
             <Button size="sm" onClick={() => navigate("/new")}>

@@ -59,7 +59,7 @@ export default function View() {
           isHeaderVisible ? 'translate-y-0' : '-translate-y-full'
         }`}
       >
-        <div className="container mx-auto px-4 py-3 sm:py-4">
+        <div className="container mx-auto px-4 py-3 sm:py-4 max-w-4xl">
           <Button variant="ghost" onClick={() => navigate("/")} size="sm">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back
