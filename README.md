@@ -48,12 +48,20 @@ npm run build
 
 ## Tech Stack
 
-- React Router v7
+- React Router v7 (SPA mode)
 - TypeScript
 - Tailwind CSS
 - shadcn/ui
 - react-markdown
+- vite-plugin-pwa (Workbox)
 - LocalStorage API
+
+## PWA Features
+
+- ✅ **Auto-updates** - New versions install automatically
+- ✅ **Offline support** - Works without internet after first load
+- ✅ **Smart caching** - Assets cached with automatic invalidation
+- ✅ **Installable** - Add to home screen on any device
 
 ## License
 
