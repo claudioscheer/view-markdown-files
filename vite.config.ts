@@ -16,6 +16,8 @@ export default defineConfig(({ command }) => ({
       manifest: false, // We'll use the public/manifest.json instead
       workbox: {
         globPatterns: ["**/*.{js,css,html,ico,png,svg,woff,woff2}"],
+        navigateFallback: 'index.html', // Serve index.html for all navigation requests (SPA routing)
+        navigateFallbackDenylist: [/^\/_/, /\/[^/?]+\.[^/]+$/], // Don't use fallback for API calls or files with extensions
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
