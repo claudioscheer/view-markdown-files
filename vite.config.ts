@@ -17,13 +17,14 @@ export default defineConfig(({ command }) => ({
         name: "Markdown Viewer",
         short_name: "MD Viewer",
         description: "Simple markdown viewer and editor with local storage",
+        start_url: "./",
         theme_color: "#171717",
         background_color: "#ffffff",
         display: "standalone",
         orientation: "portrait-primary",
         icons: [
           {
-            src: "/icon.svg",
+            src: "icon.svg",
             sizes: "any",
             type: "image/svg+xml",
             purpose: "any maskable",
