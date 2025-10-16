@@ -34,6 +34,29 @@ Open [http://localhost:5173](http://localhost:5173) to view it in the browser.
 npm run build
 ```
 
+## Deployment
+
+### GitHub Pages (Automatic)
+
+The app automatically deploys to GitHub Pages on every push to `main`.
+
+**Setup (one-time):**
+
+1. Go to your repository on GitHub: `https://github.com/claudioscheer/view-markdown-files`
+2. Click **Settings** → **Pages**
+3. Under **Source**, select **GitHub Actions**
+4. Wait for the workflow to complete (check **Actions** tab)
+5. Your app will be live at: `https://claudioscheer.github.io/view-markdown-files/`
+
+**To deploy a new version:**
+```bash
+git add .
+git commit -m "your changes"
+git push
+```
+
+The GitHub Action will automatically build and deploy!
+
 ## Usage
 
 1. **Create** a new markdown file by clicking "New File"
