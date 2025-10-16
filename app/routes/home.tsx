@@ -41,7 +41,10 @@ export default function Home() {
       <div className="sticky top-0 bg-background/95 backdrop-blur-sm border-b z-10 safe-top">
         <div className="container mx-auto px-4 py-3 sm:py-4 max-w-4xl">
           <div className="flex justify-between items-center">
-            <h1 className="text-2xl sm:text-3xl font-bold">Markdown Files</h1>
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold">Markdown Files</h1>
+              <p className="text-sm text-muted-foreground">Version {__APP_VERSION__}</p>
+            </div>
             <Button size="sm" onClick={() => navigate("/new")}>
               <Plus className="h-4 w-4 sm:mr-2" />
               <span className="hidden sm:inline">New File</span>

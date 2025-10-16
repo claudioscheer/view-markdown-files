@@ -6,6 +6,9 @@ import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig(({ mode }) => ({
   base: mode === "development" ? "/view-markdown-files" : "/view-markdown-files/",
+  define: {
+    __APP_VERSION__: JSON.stringify(process.env.npm_package_version),
+  },
   plugins: [
     tailwindcss(),
     reactRouter(),
