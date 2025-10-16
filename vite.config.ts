@@ -16,6 +16,8 @@ export default defineConfig(({ command }) => ({
       manifest: false, // We'll use the public/manifest.json instead
       workbox: {
         globPatterns: ['**/*'], // Cache all files in the build output
+        navigateFallback: 'index.html', // Serve index.html for all navigation requests
+        navigateFallbackDenylist: [/^\/_/, /\/[^/?]+\.[^/]+$/], // Don't use fallback for API calls or files with extensions
         cleanupOutdatedCaches: true,
         clientsClaim: true,
         skipWaiting: true,
