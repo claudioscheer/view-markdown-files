@@ -15,6 +15,8 @@ export default function View() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [content, setContent] = useState("");
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
     if (id) {
@@ -27,9 +29,36 @@ export default function View() {
     }
   }, [id, navigate]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Show header when scrolling up or at top
+      if (currentScrollY < lastScrollY || currentScrollY < 50) {
+        setIsHeaderVisible(true);
+      } 
+      // Hide header when scrolling down
+      else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setIsHeaderVisible(false);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [lastScrollY]);
+
   return (
     <div className="min-h-screen bg-background">
-      <div className="fixed top-0 left-0 right-0 bg-background/95 backdrop-blur-sm border-b z-10 safe-top">
+      <div 
+        className={`fixed top-0 left-0 right-0 bg-background/95 backdrop-blur-sm border-b z-10 safe-top transition-transform duration-300 ${
+          isHeaderVisible ? 'translate-y-0' : '-translate-y-full'
+        }`}
+      >
         <div className="container mx-auto px-4 py-3 sm:py-4">
           <Button variant="ghost" onClick={() => navigate("/")} size="sm">
             <ArrowLeft className="h-4 w-4 mr-2" />
@@ -38,7 +67,9 @@ export default function View() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 pt-16 sm:pt-20 pb-12 max-w-4xl">
+      <div className={`container mx-auto px-4 pb-12 max-w-4xl transition-all duration-300 ${
+        isHeaderVisible ? 'pt-16 sm:pt-20' : 'pt-4 sm:pt-6'
+      }`}>
         <article className="prose prose-neutral dark:prose-invert max-w-none prose-sm sm:prose-base">
           <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
         </article>
